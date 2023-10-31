@@ -1,0 +1,12 @@
+
+.camera-container {
+    width: 100vw;
+    height: 85vh;
+}
+
+.webcam {
+    width: auto;
+    height: 100%;
+    border: 5px solid steelblue;
+    border-radius: 5%;
+}
