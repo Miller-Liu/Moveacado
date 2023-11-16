@@ -53,17 +53,30 @@ def main(_):
         # Process images
         results = hands.process(rgb_img)
 
+        className = ''
         # if there are hand landmarks
         if results.multi_hand_landmarks:
+            landmarks = []
             for hand_landmarks in results.multi_hand_landmarks:
                 for landmark in hand_landmarks.landmark:
                     h, w, _ = img.shape
                     x, y = int(landmark.x * w), int(landmark.y * h)
                     cv2.circle(img, (x, y), 5, (0, 0, 0), -1)
+                    landmarks.append([x, y])
                 mp_drawing.draw_landmarks(img, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-        
-        # detect gestures
-        img, gesture = detect(img, model, hands, class_names)
+                
+                # predict gesture in hand gesture recognition model
+                prediction = model.predict([landmarks])
+                classID = np.argmax(prediction)
+                className = class_names[classID]
+                if className not in ['thumbs up', 'thumbs down']:
+                    className = 'none'
+
+
+            # detect gestures
+            # img, gesture = detect(img, model, hands, class_names)
+
+        cv2.putText(img, className, (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
         # Display the resulting frame 
         cv2.imshow('Hand Tracking', img)

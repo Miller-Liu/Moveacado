@@ -10,10 +10,8 @@ def detect(frame, model, hands, class_names):
     className = ''
 
     if result.multi_hand_landmarks:
-        print("lol", type(result.multi_hand_landmarks))
         landmarks = []
         for hand_landmarks in result.multi_hand_landmarks:
-            print("lmao", type(hand_landmarks))
             for landmark in hand_landmarks.landmark:
                 lmx, lmy = int(landmark.x * width), int(landmark.y * height)
                 landmarks.append([lmx, lmy])
