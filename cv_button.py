@@ -67,7 +67,6 @@ class Button:
                 if not self.toggled:
                     self.toggled = True
                     self.is_selected = True
-                    logging.getLogger("movementum").info(f"{self}")
                     # actually do the clicking
                     if self._text == 'UP':
                         pyautogui.press('up')

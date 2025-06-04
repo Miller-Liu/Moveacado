@@ -5,10 +5,11 @@ def detect(frame, model, hands, class_names):
     width, height, _ = frame.shape
 
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    result = hands.process(frame_rgb)
+    result = hands.process(frame_rgb) # get hand landmark prediction
 
     className = ''
 
+    # process the result
     if result.multi_hand_landmarks:
         landmarks = []
         for hand_landmarks in result.multi_hand_landmarks:
